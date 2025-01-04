@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:studentapp/Modal/studentmodel.dart';
-import 'package:studentapp/Presentation/screen_editstudent/screen_editstudent.dart';
+
 
 class ViewStudent extends StatelessWidget {
   final StudentModal student;

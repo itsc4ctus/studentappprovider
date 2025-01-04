@@ -1,18 +1,18 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 import 'package:studentapp/Domain/widegt/dialogueBox.dart';
 import 'package:studentapp/Domain/widegt/snackbar.dart';
 import 'package:studentapp/Modal/studentmodel.dart';
 import 'package:studentapp/Presentation/screen_addstudent/widget/feild.dart';
-import 'package:studentapp/Provider/student_provider.dart';
-import 'package:studentapp/services/student_services.dart';
+import 'package:studentapp/controller/student_controller.dart';
+
 
 class EditStudentPage extends StatelessWidget {
   final StudentModal student;
   EditStudentPage({required this.student, super.key});
-
+final controller = Get.find<StudentListController>();
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> _key = GlobalKey();
@@ -118,8 +118,8 @@ class EditStudentPage extends StatelessWidget {
                       }
                       if (_key.currentState?.validate() ?? false) {
 
-                        showDialog(context: context, builder: (context){
-                          return DialogueBox(title: "Do you want to delete?", onTap: (){
+                        Get.dialog(
+                           DialogueBox().displayDialogueBox(title: "Do you want to Edit?", onTap: (){
                             String name = nameController.text;
                             int age = int.parse(ageController.text);
                             String rollNo = rollNoController.text;
@@ -135,8 +135,7 @@ class EditStudentPage extends StatelessWidget {
                               rollNo: rollNo,
                             );
 
-                            Provider.of<StudentProvider>(context, listen: false)
-                                .updateStudent(student.rollNo, updatedStudent);
+                            controller.updateStudent(rollNo, updatedStudent);
 
                             nameController.clear();
                             ageController.clear();
@@ -146,10 +145,10 @@ class EditStudentPage extends StatelessWidget {
                             _photoNotifier.value = null;
                             Navigator.pop(context);
 
-                            MySnackBar.showCustomSnackBar(context, "Student Edited Succesfly!", Colors.blue);
+                            MySnackBar.showCustomSnackBar("Student Edited Succesfly!", Colors.blue);
                             Navigator.pop(context);
-                          });
-                        }
+                          })
+
                         );
 
 

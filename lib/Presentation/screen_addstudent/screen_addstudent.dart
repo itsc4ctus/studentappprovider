@@ -1,15 +1,15 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 import 'package:studentapp/Domain/widegt/button.dart';
 import 'package:studentapp/Domain/widegt/dialogueBox.dart';
 import 'package:studentapp/Domain/widegt/snackbar.dart';
 import 'package:studentapp/Modal/studentmodel.dart';
 import 'package:studentapp/Presentation/screen_addstudent/widget/feild.dart';
-import 'package:studentapp/Provider/student_provider.dart';
-import 'package:studentapp/services/student_services.dart';
+import 'package:studentapp/controller/student_controller.dart';
+
 
 class AddStudentPage extends StatelessWidget {
   AddStudentPage({super.key});
@@ -30,7 +30,7 @@ class AddStudentPage extends StatelessWidget {
       _photoNotifier.value = File(image.path);
     }
   }
-
+final controller =Get.find<StudentListController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,12 +105,11 @@ class AddStudentPage extends StatelessWidget {
                         return;
                       }
                       if (_key.currentState?.validate() ?? false) {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return DialogueBox(
-                              title: "Do you want to Add Student?",
-                              onTap: () {
+                        Get.dialog(
+
+                             DialogueBox().displayDialogueBox(title:
+                             "Do you want to Add Student?",onTap:
+                              () {
                                 String name = nameController.text;
                                 int age = int.parse(ageController.text);
                                 String rollNo = rollNoController.text;
@@ -127,9 +126,7 @@ class AddStudentPage extends StatelessWidget {
                                   rollNo: rollNo,
                                 );
 
-                                Provider.of<StudentProvider>(context, listen: false)
-                                    .addStudent(student);
-
+                               controller.addStudent(student);
                                 nameController.clear();
                                 ageController.clear();
                                 rollNoController.clear();
@@ -137,16 +134,16 @@ class AddStudentPage extends StatelessWidget {
                                 cgpaController.clear();
                                 _photoNotifier.value = null;
 
-                                MySnackBar.showCustomSnackBar(context, "Student Added Succesfly!", Colors.green);
-                                // Close the dialog
-                                Navigator.pop(context);
 
+                                // Close the dialog
+                                Get.back();
                                 // Navigate back to the home screen
-                                Navigator.pop(context);
+                                Get.back();
+                                MySnackBar.showCustomSnackBar("Student Added Succesfly!", Colors.green);
 
                               },
-                            );
-                          },
+                            )
+
                         );
 
                       }
@@ -198,6 +195,4 @@ class AddStudentPage extends StatelessWidget {
     }
     return null;
   }
-
-
 }

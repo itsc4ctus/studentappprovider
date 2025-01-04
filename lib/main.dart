@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:studentapp/Modal/studentmodel.dart';
 import 'package:studentapp/Presentation/screen_home/screen_home.dart';
-import 'package:studentapp/Provider/student_provider.dart';
+import 'package:studentapp/controller/student_controller.dart';
 
 void main() async{
   await WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+  Get.put(StudentListController());
   Hive.registerAdapter(StudentModalAdapter());
-  runApp(ChangeNotifierProvider(
-      create: (context) => StudentProvider(),
-      child: const MyApp()));
+  runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       theme: ThemeData(
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           backgroundColor: Colors.yellow.shade800,
