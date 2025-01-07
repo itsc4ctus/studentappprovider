@@ -17,7 +17,6 @@ class ViewStudent extends StatelessWidget {
       body:Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Display the student's photo
           Center(
             child: CircleAvatar(
               radius: 80,

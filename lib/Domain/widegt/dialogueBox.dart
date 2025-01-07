@@ -16,11 +16,7 @@ middleText: "press yes to continue.",
      onConfirm: onTap,
    );
  }
-
-
-
-
-  }
+}
 
 
 

@@ -4,30 +4,30 @@ import 'package:studentapp/Modal/studentmodel.dart';
 import 'package:studentapp/services/student_services.dart';
 
 class StudentListController extends GetxController {
-  var studentList = <StudentModal>[].obs;  // Observable list of students
+  var studentList = <StudentModal>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    fetchStudents();  // Fetch students on initialization
+    fetchStudents();
   }
 
   void fetchStudents() async {
-    studentList.value = await StudentService().getStudents(); // Fetch and update the list
+    studentList.value = await StudentService().getStudents();
   }
 
   void addStudent(StudentModal student) async {
     await StudentService().addStudent(student);
-    fetchStudents();  // Refresh the student list after adding a new student
+    fetchStudents();
   }
 
   void updateStudent(String rollNo, StudentModal student) async {
     await StudentService().updateStudent(rollNo, student);
-    fetchStudents();  // Refresh the student list after updating
+    fetchStudents();
   }
 
   void deleteStudent(String rollNo) async {
     await StudentService().deleteStudent(rollNo);
-    fetchStudents();  // Refresh the student list after deleting
+    fetchStudents();
   }
 }
